@@ -2,11 +2,11 @@ const Discord = require('discord.js');
 const client = new Discord.Client();
 const config = require("./config.json");
 const Enmap = require('enmap');
-const Version = "1.0.1";
+const Version = "1.0.2";
 const PrevVersion = "0.0.1 DEV"
 const FileName = "huong.js";
-const LineCount = 1697;
-const CharacterCount = 69915;
+const LineCount = 1714;
+const CharacterCount = 71034;
 const GiveAndFeed = 0;
 const Commands = 0;
 
@@ -222,25 +222,36 @@ client.on('message', msg => {
     }
     if (msg_content.startsWith('h_roll')) { //6
       var number2 = [msg_content.split(" ").slice(1).join(" ")] //5
-      if (number2 == "")
-        msg.channel.send("I can't do 0, *my love~*!")
-        return
-      if (number2 == 0)
+      if (number2 == "") {
         msg.channel.startTyping()
         setTimeout(function(){msg.channel.send("I can't do 0, *my love~*!")}, delay)
         msg.channel.stopTyping()
         return
-      if (number2 == 1)
+      }
+      if (number2 == 0) {
+        msg.channel.startTyping()
+        setTimeout(function(){msg.channel.send("I can't do 0, *my love~*!")}, delay)
+        msg.channel.stopTyping()
+        return
+      }
+      if (number2 == 1) {
         msg.channel.startTyping()
         setTimeout(function(){msg.channel.send("You know it will always be 1, *my love~*!")}, delay)
         msg.channel.stopTyping()
         return
+      }
       var random2 = [Math.floor(Math.random()*number2)+1] //6
       var sentences = ["*My love*, you rolled **" + random2 + "**!", "Your number is **" + random2 + "**, *my love~*!", "It's **" + random2 + "**, *my love~*!"];
       var random = sentences[Math.floor(Math.random()*sentences.length)];
-      if (isNaN(random2))
-        return msg.channel.send("This isn't a number, *my love~*!")
-      msg.channel.send (random)
+      if (isNaN(random2)) {
+        msg.channel.startTyping()
+        setTimeout(function(){msg.channel.send("This isn't a number, *my love~*!")}, delay)
+        msg.channel.stopTyping()
+        return
+      }
+      msg.channel.startTyping()
+      setTimeout(function(){msg.channel.send (random)}, delay)
+      msg.channel.stopTyping()
     }
     if (msg.content.toLowerCase() == 'h_spook') {
       var sentences = ["*My love*, you think you can scare me?","I love it when you try that, *my love~*","*giggles* \n*My love,* you know that doesn't get me!"]
@@ -375,6 +386,9 @@ client.on('message', msg => {
       return
     }
     if (msg_content.startsWith('h_motivate')) {
+      if (arg = "") {
+        return
+      }
       var user = msg.author.id
       var sentences = ["Only *my love* needs motivation!","Why do you need me to motivate someone else, *my love*?"]
       var random = sentences[Math.floor(Math.random()*sentences.length)]
@@ -740,11 +754,9 @@ client.on('message', msg => {
         msg.channel.stopTyping()
       }
     }
-    else {
-
-    }
     //Generic Tag
-    if (msg.mentions.users.first() == client.user) { //Generic tag
+    if (msg.isMentioned(client.users.get('502309723194785792'))) { //Generic tag
+      console.log("Hello.")
       var sentences = ["Hm?","What?","I don't understand, *my love*",'What do you m-mean, *my love*?',"?","What was that, *my love*?","I don't understand that, *my love*"]
       var random = sentences[Math.floor(Math.random()*sentences.length)];
       if (msg_content.split(" ").slice(1).join(" ") == ('i love you')) {
@@ -763,7 +775,6 @@ client.on('message', msg => {
         msg.channel.stopTyping()
         return
       }
-      if (msg_content.split(" ").slice(1).join(" ") == client.user) return
       msg.channel.startTyping()
       setTimeout(function(){msg.channel.send(random)}, delay)
       msg.channel.stopTyping()
@@ -814,6 +825,7 @@ client.on('message', msg => {
         msg.channel.startTyping()
         setTimeout(function(){msg.channel.send("T-This isn't a number!")}, delay)
         msg.channel.stopTyping()
+        return
       }
       msg.channel.startTyping()
       setTimeout(function(){msg.channel.send (random)}, delay)
@@ -949,12 +961,16 @@ client.on('message', msg => {
       msg.channel.startTyping()
       setTimeout(function(){msg.channel.send(random)}, delay)
       msg.channel.stopTyping()
+      return
     }
     if (msg_content.startsWith('h_motivate')) {
       var user = msg.author.id
       var sentences = [msg.author.toString() + " t-thinks you can, " + msg.mentions.members.first() + "!", "D-Do it f-for " + msg.author.toString() + ", " + msg.mentions.members.first() + "!", msg.author.toString() + " b-believes in y-you, " + msg.mentions.members.first() + "!"]
       var random = sentences[Math.floor(Math.random()*sentences.length)]
       let mention = msg.mentions.users.first()
+      if (arg = "") {
+        return
+      }
       if (!mention) {
         msg.channel.startTyping()
         setTimeout(function(){msg.reply("I-I can't motivate t-this...!")}, delay)
@@ -1012,14 +1028,6 @@ client.on('message', msg => {
       setTimeout(function(){msg.channel.send(random)}, delay)
       msg.channel.stopTyping()
     }
-
-    //test commands
-    /*if (msg.content.toLowerCase() == 'h_delay') {
-      console.log(delay)
-      msg.channel.startTyping()
-      setTimeout(function(){msg.channel.send("hello")}, delay)
-      msg.channel.stopTyping()
-    }*/
 
     //Help commands
     if (msg.content.toLowerCase() == 'h_help ping') {
@@ -1302,7 +1310,7 @@ client.on('message', msg => {
         description: "Y-You can g-give me something w-with this...! J-Just do \"h_give [Thing]\"\nI-If you j-just say \"h_give\",I-I can give you a-a list of things you c-can give me...!",
         fields: [{
           name: "Y-You can do `@Huong#5272 [Phrase]`",
-          value: "`I love you`,`I hate you`"
+          value: "`I love you`,`I hate you`,`good morning`,`good night`,`good evening`,`good afternoon`,`hi`,`hey`,`sup`,`hello`"
         }
       ],
         footer: {
@@ -1651,14 +1659,11 @@ client.on('message', msg => {
         msg.channel.stopTyping()
       }
     }
-    else {
-
-    }
     //Generic Tag
-    if (msg.mentions.users.first() == client.user) { //Generic tag
+    if (msg.isMentioned(client.users.get('502309723194785792'))) { //Generic tag
       var sentences = ["Hm?","What?","I-I don't understand",'W-What do you m-mean?',"?","W-What was that?","I-I don't understand..."]
       var random = sentences[Math.floor(Math.random()*sentences.length)];
-      if (msg_content.split(" ").slice(1).join(" ") == ('i love you')) {
+      if (arg == ('i love you')) {
         var sentences = ["Y-You do...?","I-I love y-you t-too...","A-Are you s-sure...?"];
         var random = sentences[Math.floor(Math.random()*sentences.length)];
         msg.channel.startTyping()
@@ -1666,7 +1671,7 @@ client.on('message', msg => {
         msg.channel.stopTyping()
         return
       }
-      if (msg_content.split(" ").slice(1).join(" ") == ('i hate you')) {
+      if (arg == ('i hate you')) {
         var sentences = ["W-Why...?","D-Do you r-really mean that?","T-That's *really* mean...!"];
         var random = sentences[Math.floor(Math.random()*sentences.length)];
         msg.channel.startTyping()
@@ -1674,7 +1679,46 @@ client.on('message', msg => {
         msg.channel.stopTyping()
         return
       }
-      if (msg_content.split(" ").slice(1).join(" ") == client.user) return
+      if (arg == 'good morning' || arg == 'goodmorning') {
+        var sentences = ["G-Good morning...!","H-Hi, " + msg.author.toString(), "Good m-morning, " + msg.author.toString()];
+        var random = sentences[Math.floor(Math.random()*sentences.length)];
+        msg.channel.startTyping()
+        setTimeout(function(){msg.channel.send(random)}, delay)
+        msg.channel.stopTyping()
+        return
+      }
+      if (arg == ('good evening')) {
+        var sentences = ["G-Good evening...!","H-Hello, " + msg.author.toString(), "G-Good evening, " + msg.author.toString()];
+        var random = sentences[Math.floor(Math.random()*sentences.length)];
+        msg.channel.startTyping()
+        setTimeout(function(){msg.channel.send(random)}, delay)
+        msg.channel.stopTyping()
+        return
+      }
+      if (arg == ('good night') || arg == 'goodnight') {
+        var sentences = ["G-Good night...","G-Goodbye... " + msg.author.toString() + "...", "I-I'll see you, " + msg.author.toString()];
+        var random = sentences[Math.floor(Math.random()*sentences.length)];
+        msg.channel.startTyping()
+        setTimeout(function(){msg.channel.send(random)}, delay)
+        msg.channel.stopTyping()
+        return
+      }
+      if (arg == ("good afternoon")) {
+        var sentences = ["G-Good a-afternoon...!","Good afternoon... " + msg.author.toString() + "...", "N-Nice to see you, " + msg.author.toString() + "..."];
+        var random = sentences[Math.floor(Math.random()*sentences.length)];
+        msg.channel.startTyping()
+        setTimeout(function(){msg.channel.send(random)}, delay)
+        msg.channel.stopTyping()
+        return
+      }
+      if (arg == ('hello') || arg == 'hi' || arg == 'hey' || arg == 'sup') {
+        var sentences = ["H-Hello... " + msg.author.toString() + "...", "H-Hi... " + msg.author.toString() + "...", "H-Hey..." + msg.author.toString() + "...", + "N-Nice to see you... " + msg.author.toString() + "..."];
+        var random = sentences[Math.floor(Math.random()*sentences.length)];
+        msg.channel.startTyping()
+        setTimeout(function(){msg.channel.send(random)}, delay)
+        msg.channel.stopTyping()
+        return
+      }
       msg.channel.startTyping()
       setTimeout(function(){msg.channel.send(random)}, delay)
       msg.channel.stopTyping()
